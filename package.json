@@ -1,0 +1,17 @@
+{
+  "name": "uppgift2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "source":"src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  }
+}
