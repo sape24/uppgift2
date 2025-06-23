@@ -60,7 +60,7 @@ function displayWorkexperience(data){
         const workID = row.id
 
         const workExperience = document.createElement("article")      
-        const name = document.createElement("h1")
+        const name = document.createElement("h2")
         name.textContent = companyName
         const title = document.createElement("p")
         title.textContent = jobTitle
