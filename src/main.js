@@ -28,7 +28,7 @@ function init(){
 
 async function getAPI(){                                   //funktion för att hämta arbetserfarenheter
     try{
-        const response = await fetch(`http://localhost:3000/api/users`, {      //hämta sparad arbetserfarenhet med fetch
+        const response = await fetch(`https://uppgift1-pev7.onrender.com/api/users`, {      //hämta sparad arbetserfarenhet med fetch
             
         });
 
@@ -87,7 +87,7 @@ function displayWorkexperience(data){
 
 async function deleteWorkexperience(id){                      //funktion för att ta bort arbetserfarenheter
     try{
-        const response = await fetch(`http://localhost:3000/api/users/${id}`, {         //en delete förfråga till api med ID
+        const response = await fetch(`https://uppgift1-pev7.onrender.com/api/users/${id}`, {         //en delete förfråga till api med ID
             method:"delete",
         });
 
@@ -115,7 +115,7 @@ async function addWork() {
     }
 
     try{
-    let response = await fetch('http://localhost:3000/api/users', {       //post förfrågan till api
+    let response = await fetch('https://uppgift1-pev7.onrender.com/api/users', {       //post förfrågan till api
         method: 'POST',
         headers: {
         'Content-Type': 'application/json'                               //anger att det är json som skickas
