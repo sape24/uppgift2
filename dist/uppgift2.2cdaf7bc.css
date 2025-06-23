@@ -183,7 +183,7 @@ header {
   padding: 7px;
 }
 
-#button {
+#button, #deleteButton {
   color: #fff;
   cursor: pointer;
   background-color: #007bff;

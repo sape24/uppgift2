@@ -182,7 +182,7 @@ header{
     width: 250px;
 }
 
-#button{
+#button, #deleteButton{
     border: none;
     background-color: #007bff;
     color: white;

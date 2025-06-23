@@ -32,6 +32,11 @@ async function getAPI(){                                   //funktion för att h
             
         });
 
+        if(response.status === 404){                                                        //ifall det är status 404 skicka en tom array
+            displayWorkexperience([])
+            return
+        }
+
         if (!response.ok){
             throw new Error ('Nätverksproblem - felaktigt svar från servern');
         }
@@ -47,11 +52,6 @@ function displayWorkexperience(data){
     const container = document.getElementById("worklist")            
     container.innerHTML = ""
 
-    if (data.length == 0) {                                        //om listan är tom visas ett meddelande om att inga erfarenheter finns
-        container.innerHTML = "Inga arbetserfarenheter hittades"
-        return
-    }
-
     data.forEach(row => {                                        //loopar igenom arbetserfarenheter 
         const companyName = row.companyname
         const jobTitle = row.jobtitle
@@ -60,7 +60,7 @@ function displayWorkexperience(data){
         const workID = row.id
 
         const workExperience = document.createElement("article")      
-        const name = document.createElement("h2")
+        const name = document.createElement("h3")
         name.textContent = companyName
         const title = document.createElement("p")
         title.textContent = jobTitle
@@ -71,6 +71,7 @@ function displayWorkexperience(data){
 
         const deleteButton = document.createElement("button")
         deleteButton.textContent = "Radera"
+        deleteButton.id = "deleteButton"
         deleteButton.addEventListener("click", () => {               
             deleteWorkexperience(workID)
         })
@@ -128,6 +129,7 @@ async function addWork() {
     
     let data = await response.json();
     console.log(data);
+    window.location.href ="index.html"                                       //redirect till startsida efter lyckad POST
     } catch (error){
         console.error('Det uppstod ett fel:', error.message);
     }

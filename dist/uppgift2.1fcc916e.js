@@ -681,6 +681,103 @@ function toggleMenu() {
     if (style.display === "none") mobileMenuEl.style.display = "block";
     else mobileMenuEl.style.display = "none";
 }
+window.onload = init //anropa init funktion när sidan laddats klart
+;
+function init() {
+    getAPI();
+}
+async function getAPI() {
+    try {
+        const response = await fetch(`https://uppgift1-pev7.onrender.com/api/users`, {});
+        if (response.status === 404) {
+            displayWorkexperience([]);
+            return;
+        }
+        if (!response.ok) throw new Error("N\xe4tverksproblem - felaktigt svar fr\xe5n servern");
+        const data = await response.json();
+        displayWorkexperience(data); //anropar funktion och skickar med datana
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+    }
+}
+function displayWorkexperience(data) {
+    const container = document.getElementById("worklist");
+    container.innerHTML = "";
+    data.forEach((row)=>{
+        const companyName = row.companyname;
+        const jobTitle = row.jobtitle;
+        const location = row.location;
+        const description = row.description;
+        const workID = row.id;
+        const workExperience = document.createElement("article");
+        const name = document.createElement("h3");
+        name.textContent = companyName;
+        const title = document.createElement("p");
+        title.textContent = jobTitle;
+        const locat = document.createElement("p");
+        locat.textContent = location;
+        const descrip = document.createElement("p");
+        descrip.textContent = description;
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Radera";
+        deleteButton.id = "deleteButton";
+        deleteButton.addEventListener("click", ()=>{
+            deleteWorkexperience(workID);
+        });
+        workExperience.appendChild(name);
+        workExperience.appendChild(title);
+        workExperience.appendChild(locat);
+        workExperience.appendChild(descrip);
+        workExperience.appendChild(deleteButton);
+        container.appendChild(workExperience);
+    });
+}
+async function deleteWorkexperience(id) {
+    try {
+        const response = await fetch(`https://uppgift1-pev7.onrender.com/api/users/${id}`, {
+            method: "delete"
+        });
+        if (!response.ok) throw new Error("N\xe4tverksproblem - felaktigt svar fr\xe5n servern");
+        getAPI();
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+    }
+}
+async function addWork() {
+    let user = {
+        companyname: document.getElementById("name").value,
+        jobtitle: document.getElementById("title").value,
+        location: document.getElementById("location").value,
+        description: document.getElementById("description").value
+    };
+    if (!user.companyname || !user.jobtitle || !user.location || !user.description) {
+        const error = document.getElementById("errormessage");
+        error.textContent = "Du m\xe5ste fylla i alla f\xe4lt!";
+        return;
+    }
+    try {
+        let response = await fetch('https://uppgift1-pev7.onrender.com/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' //anger att det är json som skickas
+            },
+            body: JSON.stringify(user) //user objekt blir json sträng
+        });
+        if (!response.ok) throw new Error("N\xe4tverksproblem - felaktigt svar fr\xe5n servern");
+        let data = await response.json();
+        console.log(data);
+        window.location.href = "index.html" //redirect till startsida efter lyckad POST
+        ;
+    } catch (error) {
+        console.error('Det uppstod ett fel:', error.message);
+    }
+}
+document.querySelector(".form").addEventListener("submit", (event)=>{
+    event.preventDefault() //förhindrar att sidan laddas om
+    ;
+    addWork() //anropar addwork funktionen 
+    ;
+});
 
 },{}]},["iUuJv","fILKw"], "fILKw", "parcelRequirea041", {})
 
